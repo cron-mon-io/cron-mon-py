@@ -12,6 +12,8 @@ def monitor(monitor_id: str) -> Callable[[Any], Any]:
     Args:
         monitor_id: The monitor ID to use for monitoring the function.
     """
+    # TODO: Use environment variable for the base URL - and possibly outside of
+    # the decorator, so that if it's not provided the code will fail on import.
     BASE_URL = "http://127.0.0.1:8000/api/v1"
 
     def decorator(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
