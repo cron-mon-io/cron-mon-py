@@ -1,7 +1,9 @@
 """Tests for `monitor`."""
+
 import time
 
 from cron_mon import monitor
+
 
 @monitor("a04376e2-0fb5-4949-9744-7c5d0a50b411")
 def cron_job() -> str:
