@@ -10,7 +10,6 @@
         "--add-host",
         "host.docker.internal:host-gateway"
     ],
-    "onCreateCommand": "${containerWorkspaceFolder}/.devcontainer/on-create.sh",
     "features": {
         "ghcr.io/devcontainers/features/git": {}
     },
