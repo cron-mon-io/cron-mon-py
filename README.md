@@ -1,3 +1,6 @@
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
+
 # `cron-mon-py`
 
 A simple Python package to make using [CronMon](https://github.com/cron-mon-io) in your cron jobs and scheduled tasks quick and easy.
