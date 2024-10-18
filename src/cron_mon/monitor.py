@@ -2,9 +2,11 @@
 
 import os
 from functools import wraps
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 from requests import Session
+
+from .exceptions import CronMonAPIException, InvalidAPIKey
 
 
 class monitor:
@@ -21,9 +23,6 @@ class monitor:
             monitor_id: The monitor ID to use for monitoring the function.
         """
         self.monitor_id = monitor_id
-        self.monitor_url = (
-            f"{self.__SERVER_URL}/api/v1/monitors/{self.monitor_id}"
-        )
 
     def __call__(self, func: Callable[..., Any]) -> Callable[[Any], Any]:
         """Wrap the function with monitoring logic.
@@ -35,12 +34,7 @@ class monitor:
         @wraps(func)
         def wrapper(*args: tuple, **kwargs: dict) -> Any:
             with Session() as session:
-                # Record the start of the job.
-                # TODO: Handle exceptions from the server.
-                job_id = session.post(
-                    url=f"{self.monitor_url}/jobs/start",
-                    headers={"X-API-Key": self.__API_KEY},
-                ).json()["data"]["job_id"]
+                job_id = self.__record_start(session)
 
                 # Execute the decorated function and record the output and any
                 # exceptions that occur.
@@ -50,17 +44,12 @@ class monitor:
                 except Exception as e:
                     exc = e
 
-                # Finish the job by sending the output and whether the job
-                # succeeded or not.
-                # TODO: Handle exceptions from the server.
                 output = exc or result
-                session.post(
-                    url=f"{self.monitor_url}/jobs/{job_id}/finish",
-                    headers={"X-API-Key": self.__API_KEY},
-                    json={
-                        "succeeded": exc is None,
-                        "output": str(output) if output else None,
-                    },
+                self.__record_finish(
+                    session,
+                    job_id,
+                    exc is None,
+                    str(output) if output else None,
                 )
 
                 # Raise an exception if one occurred, since we don't want to
@@ -72,3 +61,64 @@ class monitor:
                 return result
 
         return wrapper
+
+    def __record_start(self, session: Session) -> str:
+        """Record the start of a job with the CronMon server.
+
+        Args:
+            session: The session to use for making the API call.
+
+        Returns:
+            The job ID for the started job.
+        """
+        return self.__api_call(
+            session, f"/monitors/{self.monitor_id}/jobs/start"
+        )["job_id"]
+
+    def __record_finish(
+        self,
+        session: Session,
+        job_id: str,
+        succeeded: bool,
+        output: Optional[str],
+    ) -> None:
+        """Record the finish of a job with the CronMon server.
+
+        Args:
+            session: The session to use for making the API call.
+            job_id: The job ID for the job to finish.
+            succeeded: Whether the job succeeded or not.
+            output: The output of the job.
+        """
+        self.__api_call(
+            session,
+            f"/monitors/{self.monitor_id}/jobs/{job_id}/finish",
+            json={"succeeded": succeeded, "output": output},
+        )
+
+    def __api_call(
+        self, session: Session, endpoint: str, json: Optional[dict] = None
+    ) -> dict:
+        """Make an API call to the CronMon server.
+
+        Args:
+            session: The session to use for making the API call.
+            endpoint: The API endpoint to call.
+            json: The JSON data to send with the API call.
+
+        Returns:
+            The JSON response from the API call.
+        """
+        # TODO: What does this do if we can't reach the server?
+        response = session.post(
+            url=f"{self.__SERVER_URL}/api/v1{endpoint}",
+            headers={"X-API-Key": self.__API_KEY},
+            json=json,
+        )
+        if not response.ok:
+            message = response.json()["error"]["description"]
+            if response.status_code == 401:
+                raise InvalidAPIKey(message)
+            raise CronMonAPIException(message)
+
+        return response.json()["data"]
