@@ -1,6 +1,8 @@
 """Tests that ensure the `monitor` decorator takes its config from env."""
 
 import os
+import sys
+from unittest import mock
 
 import pytest
 
@@ -15,9 +17,11 @@ import pytest
 )
 def test_monitor_env(env_vars: dict[str, str], error_message: str) -> None:
     """Test that the `monitor` decorator takes its config from env."""
-    # Is there a way to test this without modifying the environment?
-    os.environ.clear()
-    os.environ.update(env_vars)
+    # when `cron_mon.monitor` is imported in other tests, it will be pre-loaded
+    # with the default env vars. We need to remove it from `sys.modules` to
+    # ensure it is re-imported with the new env vars in this test.
+    sys.modules.pop("cron_mon.monitor", None)
 
-    with pytest.raises(KeyError, match=error_message):
-        from cron_mon.monitor import monitor  # noqa: F401
+    with mock.patch.dict(os.environ, env_vars, clear=True):
+        with pytest.raises(KeyError, match=error_message):
+            from cron_mon.monitor import monitor  # noqa: F401
