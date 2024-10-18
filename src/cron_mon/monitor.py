@@ -4,7 +4,7 @@ import os
 from functools import wraps
 from typing import Any, Callable, Optional
 
-from requests import Session
+from requests import ConnectionError, Session
 
 from .exceptions import CronMonAPIException, InvalidAPIKey
 
@@ -109,7 +109,17 @@ class monitor:
         Returns:
             The JSON response from the API call.
         """
-        # TODO: What does this do if we can't reach the server?
+        try:
+            response = session.post(
+                url=f"{self.__SERVER_URL}/api/v1{endpoint}",
+                headers={"X-API-Key": self.__API_KEY},
+                json=json,
+            )
+        except ConnectionError as e:
+            raise CronMonAPIException(
+                f"Failed to connect to the CronMon API at {self.__SERVER_URL}"
+            ) from e
+
         response = session.post(
             url=f"{self.__SERVER_URL}/api/v1{endpoint}",
             headers={"X-API-Key": self.__API_KEY},
