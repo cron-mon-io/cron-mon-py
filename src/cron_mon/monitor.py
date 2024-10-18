@@ -24,7 +24,7 @@ class monitor:
         """
         self.monitor_id = monitor_id
 
-    def __call__(self, func: Callable[..., Any]) -> Callable[[Any], Any]:
+    def __call__(self, func: Callable[..., Any]) -> Callable[..., Any]:
         """Wrap the function with monitoring logic.
 
         Args:
