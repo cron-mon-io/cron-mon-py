@@ -55,6 +55,8 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
+        # Only upload coverage once for the latest Python version we support.
+        if: ${{ matrix.python-version }} == "3.12"
         with:
           files: .coverage
           fail_ci_if_error: true
