@@ -18,7 +18,12 @@ def test_monitoring() -> None:
     responses.post(
         API_FINISH_URL,
         json={"data": {}},
-        match=[matchers.header_matcher({"X-API-Key": "mock-api-key"})],
+        match=[
+            matchers.header_matcher({"X-API-Key": "mock-api-key"}),
+            matchers.json_params_matcher(
+                {"succeeded": True, "output": "Hello, world!"}
+            ),
+        ],
     )
 
     @monitor(MONITOR_ID)
