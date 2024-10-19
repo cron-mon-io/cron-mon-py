@@ -28,7 +28,7 @@ jobs:
         run: make install
 
       - name: Run static checks
-        run: make static-checks
+        run: make static-tests
 
   pytest:
     name: Pytest
