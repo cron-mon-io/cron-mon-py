@@ -1,4 +1,8 @@
+![Static Badge](https://img.shields.io/badge/Python-3.9_%7C_3.10_%7C_3.11_%7C_3.12-blue?logo=python&logoColor=white)
+[![CI](https://github.com/cron-mon-io/cron-mon-py/actions/workflows/ci.yml/badge.svg)](https://github.com/cron-mon-io/cron-mon-py/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/cron-mon-io/cron-mon-py/graph/badge.svg?token=EBVN9A4223)](https://codecov.io/gh/cron-mon-io/cron-mon-py)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
 # `cron-mon-py`
