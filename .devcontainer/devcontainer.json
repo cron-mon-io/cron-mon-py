@@ -10,6 +10,9 @@
         "--add-host",
         "host.docker.internal:host-gateway"
     ],
+    "otherPortsAttributes": {
+        "onAutoForward": "ignore"
+    },
     "features": {
         "ghcr.io/devcontainers/features/git": {}
     },
