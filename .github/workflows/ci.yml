@@ -35,8 +35,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ["3.9", "3.10", "3.11", "3.12"]
-        upload-coverage: [false, false, false, true]
+        python: [
+          { version: "3.9", upload-coverage: false },
+          { version: "3.10", upload-coverage: false },
+          { version: "3.11", upload-coverage: false },
+          { version: "3.12", upload-coverage: true }
+        ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -45,8 +49,8 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
-        run: uv python install ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python.version }}
+        run: uv python install ${{ matrix.python.version }}
 
       - name: Install dependencies
         run: make install
@@ -56,7 +60,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
-        if: matrix.upload-coverage
+        if: matrix.python.upload-coverage
         with:
           files: coverage.lcov
           fail_ci_if_error: true
