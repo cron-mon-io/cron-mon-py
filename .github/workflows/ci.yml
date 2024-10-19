@@ -58,6 +58,6 @@ jobs:
         # Only upload coverage once for the latest Python version we support.
         if: ${{ matrix.python-version }} == "3.12"
         with:
-          files: .coverage
+          files: coverage.lcov
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
