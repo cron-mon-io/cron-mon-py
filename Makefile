@@ -9,6 +9,9 @@ static-tests:
 unit-tests:
 	@uv run pytest
 
+build:
+	@uv build
+
 serve-docs:
 	@uv run mkdocs serve
 
