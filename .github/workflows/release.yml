@@ -1,9 +1,8 @@
 name: release
 
 on:
-  pull_request:
-  # release:
-  #   types: [ published ]
+  release:
+    types: [ published ]
 
 # ${{ github.event.release.tag_name }} is the tag of the release
 
@@ -32,4 +31,4 @@ jobs:
         run: make build
 
       - name: Publish package
-        run: uv publish --publish-url https://test.pypi.org/legacy/
+        run: uv publish
