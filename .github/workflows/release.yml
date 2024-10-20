@@ -8,7 +8,7 @@ on:
 # ${{ github.event.release.tag_name }} is the tag of the release
 
 jobs:
-  build:
+  publish-package:
     runs-on: ubuntu-latest
     permissions:
       contents: read
