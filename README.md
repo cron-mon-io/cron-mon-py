@@ -53,6 +53,7 @@ Once you have `uv` setup, you can use the `Makefile` provided to install all dep
 * `static-tests`: Run static tests via `ruff` and `mypy`
 * `unit-tests`: Run unit tests via `pytest`
 * `test`: Run all of the available tests for `cron-mon-py` (`static-tests` and `unit-tests`)
+* `serve-docs`: Serve the package's documentation with hot-reload
 * `format`: Autoformat the code with `ruff`*
 
 > [!NOTE]
