@@ -9,5 +9,8 @@ static-tests:
 unit-tests:
 	@uv run pytest
 
+serve-docs:
+	@uv run mkdocs serve
+
 format:
 	@uv run ruff format src tests
