@@ -7,6 +7,8 @@ build:
     - asdf plugin add uv
     - asdf install uv latest
     - asdf global uv latest
+    - uv sync --frozen
+    - uv run mkdocs build
 
 # Build documentation with Mkdocs
 mkdocs:
