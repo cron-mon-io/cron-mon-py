@@ -18,11 +18,6 @@ A simple Python package to make using [CronMon](https://github.com/cron-mon-io) 
 pip install cron-mon-py
 ```
 
-> `cron-mon-py` isn't currently published anywhere, so this doesn't work just yet. You can however, install from Git
-> ```console
-> pip install git+https://github.com/cron-mon-io/cron-mon-py.git
-> ```
-
 ## Example
 
 Simply import the `monitor` decorator and use it on any function that serves as the entry point to your cron job/ scheduled task that you wish to monitor:
