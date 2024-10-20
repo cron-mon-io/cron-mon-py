@@ -37,7 +37,7 @@ from cron_mon import monitor
 # Replace <your-monitor-id> with your actual Monitor ID
 @monitor("<your-monitor-id>")
 def cron_job():
-    """Your cron job code here"
+    """Your cron job code here"""
     ...
 ```
 
