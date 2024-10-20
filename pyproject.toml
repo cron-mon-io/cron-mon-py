@@ -1,7 +1,7 @@
 [project]
 name = "cron-mon-py"
 version = "0.1.0"
-description = "A simple integration for [CronMon](https://github.com/cron-mon-io)"
+description = "A simple integration for CronMon"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [

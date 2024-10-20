@@ -18,7 +18,6 @@ A simple Python package to make using [CronMon](https://github.com/cron-mon-io) 
 pip install cron-mon-py
 ```
 
-> [!WARNING]
 > `cron-mon-py` isn't currently published anywhere, so this doesn't work just yet. You can however, install from Git
 > ```console
 > pip install git+https://github.com/cron-mon-io/cron-mon-py.git
@@ -28,7 +27,6 @@ pip install cron-mon-py
 
 Simply import the `monitor` decorator and use it on any function that serves as the entry point to your cron job/ scheduled task that you wish to monitor:
 
-> [!NOTE]
 > You'll need to have setup a _Monitor_ and an API key within CronMon itself, and have exposed the API key in an environment variable called `CRON_MON_API_KEY`.
 
 ```python
@@ -57,5 +55,4 @@ Once you have `uv` setup, you can use the `Makefile` provided to install all dep
 * `serve-docs`: Serve the package's documentation with hot-reload
 * `format`: Autoformat the code with `ruff`*
 
-> [!NOTE]
 > *You can avoid having to use `make format` if you setup your IDE to autoformat on save. The provided dev container has this already setup for you.
