@@ -8,13 +8,6 @@
 pip install cron-mon-py
 ```
 
-!!! warning
-
-    `cron-mon-py` isn't currently published anywhere, so this doesn't work just yet. You can however, install from Git
-    ```
-    pip install git+https://github.com/cron-mon-io/cron-mon-py.git
-    ```
-
 ## Monitor setup
 
 Before you can start monitoring a cron job, you'll need to have [CronMon](https://github.com/cron-mon-io) itself deployed and running.
